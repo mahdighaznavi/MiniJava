@@ -497,8 +497,4 @@ public class CodeGenerator {
         symbolTable.setLastType(SymbolType.Int);
     }
 
-    public void main() {
-
-    }
-
 }
