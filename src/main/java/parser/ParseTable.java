@@ -23,8 +23,8 @@ public class ParseTable {
                 String temp = cols[i].substring(5);
                 try {
                     nonTerminals.put(i, NonTerminal.valueOf(temp));
-                }catch (Exception e){
-                    temp = temp;
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             else {
