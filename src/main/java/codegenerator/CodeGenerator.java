@@ -3,9 +3,7 @@ package codegenerator;
 import log.Log;
 import errorhandler.ErrorHandler;
 import scanner.token.Token;
-import semantic.symbol.Symbol;
-import semantic.symbol.SymbolTable;
-import semantic.symbol.SymbolType;
+import semantic.symbol.*;
 
 import java.util.Stack;
 
@@ -161,15 +159,7 @@ public class CodeGenerator {
             try {
 
                 Symbol s = getSymbolTable().get(className, methodName, next.getValue());
-                VarType t = VarType.Int;
-                switch (s.getType()) {
-                    case Bool:
-                        t = VarType.Bool;
-                        break;
-                    case Int:
-                        t = VarType.Int;
-                        break;
-                }
+                VarType t = s.getType().getAssociatedVarType();
                 getSs().push(new Address(s.getAddress(), t));
 
 
@@ -189,15 +179,7 @@ public class CodeGenerator {
         getSs().pop();
 
         Symbol s = getSymbolTable().get(getSymbolStack().pop(), getSymbolStack().pop());
-        VarType t = VarType.Int;
-        switch (s.getType()) {
-            case Bool:
-                t = VarType.Bool;
-                break;
-            case Int:
-                t = VarType.Int;
-                break;
-        }
+        VarType t = s.getType().getAssociatedVarType();
         getSs().push(new Address(s.getAddress(), t));
 
     }
@@ -233,16 +215,8 @@ public class CodeGenerator {
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
-            VarType t = VarType.Int;
-            switch (getSymbolTable().getMethodReturnType(className, methodName))
-            {
-                case Int:
-                    t = VarType.Int;
-                    break;
-                case Bool:
-                    t = VarType.Bool;
-                    break;
-            }
+            VarType t;
+            t = getSymbolTable().getMethodReturnType(className, methodName).getAssociatedVarType();
             Address temp = new Address(getMemory().getTemp(),t);
             getSs().push(temp);
             getMemory().add3AddressCode(Operation.ASSIGN, new Address(temp.getNum(), VarType.Address, TypeAddress.Imidiate), new Address(getSymbolTable().getMethodReturnAddress(className, methodName), VarType.Address), null);
@@ -261,15 +235,7 @@ public class CodeGenerator {
 //        String className = symbolStack.pop();
         try {
             Symbol s = getSymbolTable().getNextParam(getCallStack().peek(), methodName);
-            VarType t = VarType.Int;
-            switch (s.getType()) {
-                case Bool:
-                    t = VarType.Bool;
-                    break;
-                case Int:
-                    t = VarType.Int;
-                    break;
-            }
+            VarType t = s.getType().getAssociatedVarType();
             Address param = getSs().pop();
             if (param.getVarType() != t) {
                 ErrorHandler.printError("The argument type isn't match");
@@ -459,13 +425,7 @@ public class CodeGenerator {
         String methodName = getSymbolStack().pop();
         Address s = getSs().pop();
         SymbolType t = getSymbolTable().getMethodReturnType(getSymbolStack().peek(), methodName);
-        VarType temp = VarType.Int;
-        switch (t) {
-            case Int:
-                break;
-            case Bool:
-                temp = VarType.Bool;
-        }
+        VarType temp = t.getAssociatedVarType();
         if (s.getVarType() != temp) {
             ErrorHandler.printError("The type of method and return address was not match");
         }
@@ -490,11 +450,11 @@ public class CodeGenerator {
     }
 
     public void lastTypeBool() {
-        getSymbolTable().setLastType(SymbolType.Bool);
+        getSymbolTable().setLastType(new Bool());
     }
 
     public void lastTypeInt() {
-        getSymbolTable().setLastType(SymbolType.Int);
+        getSymbolTable().setLastType(new Int());
     }
 
     public Memory getMemory() {
