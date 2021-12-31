@@ -3,7 +3,11 @@ package codegenerator;
 import log.Log;
 import errorhandler.ErrorHandler;
 import scanner.token.Token;
-import semantic.symbol.*;
+import semantic.symbol.SymbolType;
+import semantic.symbol.Bool;
+import semantic.symbol.Int;
+import semantic.symbol.SymbolTable;
+import semantic.symbol.Symbol;
 
 import java.util.Stack;
 
