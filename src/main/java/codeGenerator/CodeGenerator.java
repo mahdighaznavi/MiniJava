@@ -75,10 +75,10 @@ public class CodeGenerator {
                 save();
                 break;
             case 15:
-                _while();
+                whileLoop();
                 break;
             case 16:
-                jpf_save();
+                jpfSave();
                 break;
             case 17:
                 jpHere();
@@ -90,7 +90,7 @@ public class CodeGenerator {
                 equal();
                 break;
             case 20:
-                less_than();
+                lessThan();
                 break;
             case 21:
                 and();
@@ -344,12 +344,12 @@ public class CodeGenerator {
         ss.push(new Address(memory.saveMemory(), varType.Address));
     }
 
-    public void _while() {
+    public void whileLoop() {
         memory.add3AddressCode(ss.pop().num, Operation.JPF, ss.pop(), new Address(memory.getCurrentCodeBlockAddress() + 1, varType.Address), null);
         memory.add3AddressCode(Operation.JP, ss.pop(), null, null);
     }
 
-    public void jpf_save() {
+    public void jpfSave() {
         Address save = new Address(memory.saveMemory(), varType.Address);
         memory.add3AddressCode(ss.pop().num, Operation.JPF, ss.pop(), new Address(memory.getCurrentCodeBlockAddress(), varType.Address), null);
         ss.push(save);
@@ -374,7 +374,7 @@ public class CodeGenerator {
         ss.push(temp);
     }
 
-    public void less_than() {
+    public void lessThan() {
         Address temp = new Address(memory.getTemp(), varType.Bool);
         Address s2 = ss.pop();
         Address s1 = ss.pop();
