@@ -63,7 +63,8 @@ class ThreeAddressCode {
     public Address Operand3;
 
     public ThreeAddressCode() {
-
+        // Default constructor
+        super();
     }
 
     public ThreeAddressCode(Operation op, Address opr1, Address opr2, Address opr3) {
