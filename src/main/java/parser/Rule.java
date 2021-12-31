@@ -1,10 +1,7 @@
 package parser;
 
-import Log.Log;
 import scanner.token.Token;
-import scanner.type.Type;
 
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class Rule {
                         RHS.add(new GrammarSymbol(new Token(Token.getTyepFormString(s), s)));
 //                    }catch (IllegalArgumentException d){
 //                        d.printStackTrace();
-//                        Log.print(s);
+//                        log.print(s);
 //                    }
                 }
             }
