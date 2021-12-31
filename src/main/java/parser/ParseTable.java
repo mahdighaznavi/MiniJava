@@ -30,31 +30,31 @@ public class ParseTable {
                 terminals.put(i, new Token(Token.getTyepFormString(cols[i]), cols[i]));
             }
         }
-        actionTable = new ArrayList<Map<Token, Action>>();
-        gotoTable = new ArrayList<Map<NonTerminal, Integer>>();
+        setActionTable(new ArrayList<Map<Token, Action>>());
+        setGotoTable(new ArrayList<Map<NonTerminal, Integer>>());
         for (int i = 1; i <rows.length ; i++) {
             rows[i] = rows[i].substring(1,rows[i].length()-1);
             cols = rows[i].split("\",\"");
-            actionTable.add(new HashMap<Token, Action>());
-            gotoTable.add(new HashMap<>());
+            getActionTable().add(new HashMap<Token, Action>());
+            getGotoTable().add(new HashMap<>());
             for (int j = 1; j <cols.length ; j++) {
                 if(!cols[j].equals(""))
                 {
                     if(cols[j].equals("acc")){
-                        actionTable.get(actionTable.size()-1).put(terminals.get(j),new Action(Act.accept,0));
+                        getActionTable().get(getActionTable().size()-1).put(terminals.get(j),new Action(Act.accept,0));
                     }else
                     if(terminals.containsKey(j))
                     {
 //                        try {
                         Token t = terminals.get(j);
                         Action a = new Action(cols[j].charAt(0) == 'r' ? Act.reduce : Act.shift, Integer.parseInt(cols[j].substring(1)));
-                            actionTable.get(actionTable.size() - 1).put(t, a);
+                            getActionTable().get(getActionTable().size() - 1).put(t, a);
 //                        }catch (StringIndexOutOfBoundsException e){
 //                            e.printStackTrace();
 //                        }
                     }
                     else if(nonTerminals.containsKey(j)){
-                        gotoTable.get(gotoTable.size()-1).put(nonTerminals.get(j),Integer.parseInt(cols[j]));
+                        getGotoTable().get(getGotoTable().size()-1).put(nonTerminals.get(j),Integer.parseInt(cols[j]));
                     }
                     else {
                         throw new Exception();
@@ -67,7 +67,7 @@ public class ParseTable {
     public int getGotoTable(int currentState, NonTerminal variable )
     {
 //        try {
-            return gotoTable.get(currentState).get(variable);
+            return getGotoTable().get(currentState).get(variable);
 //        }catch (NullPointerException dd)
 //        {
 //            dd.printStackTrace();
@@ -76,7 +76,22 @@ public class ParseTable {
     }
     public Action getActionTable(int currentState ,Token terminal)
     {
-        return actionTable.get(currentState).get(terminal);
+        return getActionTable().get(currentState).get(terminal);
     }
 
+    public List<Map<Token, Action>> getActionTable() {
+        return actionTable;
+    }
+
+    public void setActionTable(List<Map<Token, Action>> actionTable) {
+        this.actionTable = actionTable;
+    }
+
+    public List<Map<NonTerminal, Integer>> getGotoTable() {
+        return gotoTable;
+    }
+
+    public void setGotoTable(List<Map<NonTerminal, Integer>> gotoTable) {
+        this.gotoTable = gotoTable;
+    }
 }

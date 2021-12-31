@@ -4,30 +4,54 @@ package codegenerator;
  * Created by mohammad hosein on 6/28/2015.
  */
 public class Address {
-    public int num;
-    public TypeAddress Type;
-    public VarType varType;
+    private int num;
+    private TypeAddress Type;
+    private VarType varType;
 
     public Address(int num, VarType varType, TypeAddress type) {
-        this.num = num;
-        this.Type = type;
-        this.varType = varType;
+        this.setNum(num);
+        this.setType(type);
+        this.setVarType(varType);
     }
 
     public Address(int num, VarType varType) {
-        this.num = num;
-        this.Type = TypeAddress.Direct;
-        this.varType = varType;
+        this.setNum(num);
+        this.setType(TypeAddress.Direct);
+        this.setVarType(varType);
     }
     public String toString(){
-        switch (Type){
+        switch (getType()){
             case Direct:
-                return num+"";
+                return getNum() +"";
             case Indirect:
-                return "@"+num;
+                return "@"+ getNum();
             case Imidiate:
-                return "#"+num;
+                return "#"+ getNum();
         }
-        return num+"";
+        return getNum() +"";
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public TypeAddress getType() {
+        return Type;
+    }
+
+    public void setType(TypeAddress type) {
+        Type = type;
+    }
+
+    public VarType getVarType() {
+        return varType;
+    }
+
+    public void setVarType(VarType varType) {
+        this.varType = varType;
     }
 }

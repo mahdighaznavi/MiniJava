@@ -1,26 +1,42 @@
 package parser;
 
 public class Action {
-  public Act action;
+  private Act action;
   //if action = shift : number is state
   //if action = reduce : number is number of rule
-  public int number;
+  private int number;
 
   public Action(Act action, int number) {
-    this.action = action;
-    this.number = number;
+    this.setAction(action);
+    this.setNumber(number);
   }
 
   public String toString() {
-    switch (action) {
+    switch (getAction()) {
       case accept:
         return "acc";
       case shift:
-        return "s" + number;
+        return "s" + getNumber();
       case reduce:
-        return "r" + number;
+        return "r" + getNumber();
     }
-    return action.toString() + number;
+    return getAction().toString() + getNumber();
+  }
+
+  public Act getAction() {
+    return action;
+  }
+
+  public void setAction(Act action) {
+    this.action = action;
+  }
+
+  public int getNumber() {
+    return number;
+  }
+
+  public void setNumber(int number) {
+    this.number = number;
   }
 }
 

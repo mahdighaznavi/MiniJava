@@ -43,9 +43,13 @@ public enum NonTerminal {
     Identifier("$|{|public|class|extends|;|}|(|)|,|return|if|while|System.out.println|ID|=|else|+|-|*|.|==|&&|<"),
     Integer(";|)|+|-|*|==|&&|<|,");
 
-    public final String pattern;
+    private final String pattern;
 
     NonTerminal(String pattern) {
         this.pattern = pattern;
+    }
+
+    public String getPattern() {
+        return pattern;
     }
 }

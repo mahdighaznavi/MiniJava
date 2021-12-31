@@ -27,7 +27,7 @@ public enum Type {
     DOT("\\."),
     EOF("\\$");
 
-    public final String pattern;
+    private final String pattern;
 
     Type(String pattern) {
         this.pattern = pattern;
@@ -37,7 +37,7 @@ public enum Type {
         Pattern pattern;
         Matcher matcher;
         for (Type t : values()) {
-            pattern = Pattern.compile(t.pattern);
+            pattern = Pattern.compile(t.getPattern());
             matcher = pattern.matcher(s);
             if (matcher.matches())
                 return t;
@@ -53,5 +53,9 @@ public enum Type {
 //
 //        }
         throw new IllegalArgumentException();
+    }
+
+    public String getPattern() {
+        return pattern;
     }
 }

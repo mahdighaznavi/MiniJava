@@ -6,25 +6,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Token {
-    public Type type;
-    public String value;
+    private Type type;
+    private String value;
 
     public Token(Type type, String value) {
-        this.type = type;
-        this.value = value;
+        this.setType(type);
+        this.setValue(value);
     }
 
     @Override
     public String toString() {
-        return String.format("(%s,%s)", type.name(), value);
+        return String.format("(%s,%s)", getType().name(), getValue());
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Token) {
             Token temp = (Token) o;
-            if (temp.type == this.type) {
-                return this.type != Type.KEYWORDS || this.value.equals(temp.value);
+            if (temp.getType() == this.getType()) {
+                return this.getType() != Type.KEYWORDS || this.getValue().equals(temp.getValue());
             }
         }
         return false;
@@ -34,9 +34,9 @@ public class Token {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = type.hashCode();
-        if(type == Type.KEYWORDS) {
-            result = prime * result + (value == null ? 0 : value.hashCode());
+        int result = getType().hashCode();
+        if(getType() == Type.KEYWORDS) {
+            result = prime * result + (getValue() == null ? 0 : getValue().hashCode());
         }
         return result;
     }
@@ -50,7 +50,7 @@ public class Token {
             }
         }
         for (Type t : Type.values()) {
-            pattern = Pattern.compile(t.pattern);
+            pattern = Pattern.compile(t.getPattern());
             matcher = pattern.matcher(s);
             if (matcher.matches()) {
                 return t;
@@ -66,5 +66,21 @@ public class Token {
 //
 //        }
         throw new IllegalArgumentException();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
