@@ -151,9 +151,7 @@ public class CodeGenerator {
 //    }
     public void checkID() {
         symbolStack.pop();
-        if (ss.peek().varType == varType.Non) {
-            //TODO : error
-        }
+        ss.peek();//TODO : error
     }
 
     public void pid(Token next) {
